@@ -1,0 +1,31 @@
+Picture scaled = new Picture(this.tileDimension, this.tileDimension);
+        
+        for (int col = 0; col < this.tileDimension; col++){
+            for (int row = 0; row < this.tileDimension; row++){
+
+                int scol = col * this.originalPicture.width() / this.tileDimension;
+                int srow = row * this.originalPicture.height() / this.tileDimension;
+                Color color = this.originalPicture.get(scol, srow);
+                scaled.set(col, row, color);
+            }
+        }
+
+        int fcol = 0;
+        for (int col = 0; col < (this.tileDimension * this.collageDimension); col++){
+
+            if (fcol == this.tileDimension){
+                fcol = 0;
+            }
+            
+            int frow = 0;
+            for (int row = 0; row < (this.tileDimension * this.collageDimension); row++){
+
+                if (frow == this.tileDimension){
+                    frow = 0;
+                }
+                Color color = scaled.get(fcol, frow);
+                this.collagePicture.set(col, row, color);
+                frow++;
+            }
+            fcol++;
+        }
