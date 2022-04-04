@@ -1,0 +1,136 @@
+	int walking;
+		int buses = 0;
+		int trains = 0;
+		
+		TNode firstLocation = new TNode(0);
+		
+		TNode firstBus = new TNode(0,null,firstLocation);
+		
+		trainZero = new TNode(0,null,firstBus);
+
+		TNode locationNode = null;
+		TNode busNode = null;
+		TNode trainNode = null;
+		
+		
+		TNode previousLocation = firstLocation;
+		TNode previousBus = firstBus;
+		TNode previousTrain = trainZero;
+		
+		for (int locationIndex = 0, busIndex = 0, trainIndex = 0; locationIndex  < locations.length; locationIndex++){
+		      
+			walking = locations[locationIndex];
+			if (busIndex<busStops.length){
+				buses = busStops[busIndex];
+			}
+			if (trainIndex<trainStations.length){
+				trains = trainStations[trainIndex];
+			}
+
+			
+			locationNode = new TNode(walking);
+
+			if (previousLocation != null)
+				previousLocation.setNext(locationNode);
+			previousLocation = locationNode;
+
+			if ( walking == buses){
+
+
+				busNode = new TNode(buses, null, locationNode);
+				
+				if (previousBus != null)
+					previousBus.setNext(busNode);
+				previousBus = busNode;
+				busIndex++;
+
+
+
+				if (buses == trains){
+					trainNode = new TNode(trains, null, busNode);
+					
+					if (previousTrain != null)
+						previousTrain.setNext(trainNode);
+					previousTrain = trainNode;
+					trainIndex++;
+				}
+			}
+		}
+		System.out.println();
+
+
+
+
+
+
+
+		int walking_location;
+		
+		int bus_location;
+		
+		int train_location;
+		
+		TNode firstlocation = new TNode(0);
+		TNode firstBus = new TNode(0,null,firstlocation);
+		trainZero = new TNode(0,null,firstBus);
+
+		TNode loc_node=null, bus_node=null, train_node=null;
+		
+		TNode prev_loc_node = firstlocation, prev_bus_node = firstBus, prev_train_node = trainZero;
+		
+		for (int location_index = 0, bus_index = 0, train_index = 0; location_index < locations.length; location_index++){
+			
+			walking_location = locations[location_index];
+				bus_location = busStops[bus_index];
+				train_location = trainStations[train_index];
+
+			
+				loc_node = new TNode(walking_location);
+				if (prev_loc_node != null)
+						prev_loc_node.setNext(loc_node);
+				prev_loc_node = loc_node;
+				
+				if ( walking_location == bus_location){
+
+					
+						bus_node = new TNode(bus_location, null, loc_node);
+						if (prev_bus_node != null)
+								prev_bus_node.setNext(bus_node);
+						prev_bus_node = bus_node;
+						++bus_index;
+
+
+						// Hook up train
+						if (bus_location == train_location){
+								train_node = new TNode(train_location, null, bus_node);
+								if (prev_train_node != null)
+										prev_train_node.setNext(train_node);
+								prev_train_node = train_node;
+								++train_index;
+						}
+				}
+		}
+		System.out.println(); 
+
+
+
+
+
+
+
+
+		ADD BUS STOP: 
+			TNode busZero = trainZero.getDown();
+		TNode current = busZero;
+		TNode down;
+		
+		while(current.getLocation() < busStop){
+				
+			if (current.getNext().getLocation() > busStop){
+						
+						down = walkTo(current.getDown(), busStop);
+						TNode newBus = new TNode(busStop, current.getNext(), down);
+						current.setNext(newBus);
+				}
+				current = current.getNext();
+		}
